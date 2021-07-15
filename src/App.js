@@ -14,6 +14,7 @@ import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
 import Review from './components/Review/Review';
 import Inventory from './components/Inventory/Inventory';
 import Notfound from './components/Notfound/Notfound';
+import ProductDetail from './components/ProductDetail/ProductDetail';
 
 library.add(fab, faCheckSquare, faCoffee);
 
@@ -36,6 +37,9 @@ function App() {
         </Route>
         <Route path="/inventory">
           <Inventory></Inventory>
+        </Route>
+        <Route path="/product/:productKey">
+          <ProductDetail></ProductDetail>
         </Route>
         <Route path="*">
           <Notfound></Notfound>
