@@ -5,12 +5,12 @@ const Cart = (props) => {
     const cart= props.cart;
     // const totalPrice = cart.reduce((total, prdct) => total + prdct.price, 0);
     
-    // let total =0;
-    // for(let i =0; i<cart.length; i++){
-    //     const product =cart[i];
-    //     total =total +product.price;
-    // }
-    const total = cart.reduce((sum, product) => sum+product.price,0);
+    let total =0;
+    for(let i =0; i<cart.length; i++){
+        const product =cart[i];
+        total =total +product.price*product.quantity || 1;
+    }
+    //const total = cart.reduce((sum, product) => sum+product.price,0);
 
     let shipping =12.99;
     if(total> 35){
