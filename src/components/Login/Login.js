@@ -1,16 +1,16 @@
 import React, { useContext, useState} from 'react';
 
 import './Login.css';
-//firebase import
+
 
 import { UserContext } from '../../App';
-import { handleFbSignIn, handleGoogleSignIn, handleSignOut, initializeLoginFramework } from './LoginManager';
+import { createUserWithEmailAndPassword, handleFbSignIn, handleGoogleSignIn, handleSignOut, initializeLoginFramework, signInWithEmailAndPassword } from './LoginManager';
 import { useHistory, useLocation } from 'react-router-dom';
 
 
 
 function Login() {
-
+  
     const [newUser, setNewUser] = useState(false);
     const [user, setUser] = useState({
       isSignedIn: false,
@@ -19,7 +19,7 @@ function Login() {
       password: '',
       photo: ''
     })
-    initializeLoginFramework();
+    
 
     //handling login with context api
     const [loggedInUser, setLoggedInUser]= useContext(UserContext);
@@ -27,14 +27,12 @@ function Login() {
     const location =useLocation();
     let {from} =location.state || {from: {pathname: "/"}};
 
-  
+    initializeLoginFramework();
       //google SignIn
     const googleSignIn=()=>{
       handleGoogleSignIn()
-      .then(res=> {
-        setUser(res);
-        setLoggedInUser(res);
-        history.replace(from);
+      .then(res=>{
+        handleResponse(res,true)
       })
     }
  
@@ -42,20 +40,24 @@ function Login() {
     const fbSignIn=()=>{
       handleFbSignIn()
       .then(res=>{
-        setUser(res);
-        setLoggedInUser(res);
-        history.replace(from);
+        handleResponse(res,true)
       })
     }
     //signOut
     const signOut=()=>{
       handleSignOut()
       .then(res=>{
-        setUser(res);
-        setLoggedInUser(res)
+        handleResponse(res,false)
       })
     }
 
+    const handleResponse = (res,redirect)=>{
+      setUser(res);
+      setLoggedInUser(res);
+      if(redirect){
+        history.replace(from);
+      }
+    }
     const handleBlur = (e) => {
       let isFieldValid = true;
       if(e.target.name === 'email'){
@@ -76,11 +78,17 @@ function Login() {
 
     const handleSubmit = (e) => {
       if(newUser && user.email && user.password){
-     
+       createUserWithEmailAndPassword(user.name,user.email,user.password)
+       .then(res=>{
+        handleResponse(res,true)
+      })
       }
   
       if(!newUser && user.email && user.password){
-       
+        signInWithEmailAndPassword(user.email,user.password)
+        .then(res=>{
+          handleResponse(res,true)
+        })
       }
   
       e.preventDefault();
