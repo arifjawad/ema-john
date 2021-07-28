@@ -3,7 +3,7 @@ import './ReviewItem.css';
 
 
 const ReviewItem = (props) => {
-  const {name,key} = props.product;
+  const {name,quantity,key} = props.product;
     return (
         <div className="review-item">
             <h4 className="product-name">{name}</h4>
