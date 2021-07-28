@@ -23,7 +23,7 @@ const Review = () => {
       const savedCart= getDatabaseCart();
       const productKeys = Object.keys(savedCart);
 
-      fetch('http://localhost:7000/productKeys',{
+      fetch('http://localhost:4000/productKeys',{
           method: 'POST',
           headers:{
               'Content-Type': 'application/json'

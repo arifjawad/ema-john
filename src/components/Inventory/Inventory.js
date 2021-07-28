@@ -1,11 +1,10 @@
 import React from 'react';
 
 
-
 const Inventory = () => {
     const handleAddProduct=()=>{
         const product = {};
-        fetch('http://localhost:7000/addProduct', {
+        fetch('http://localhost:4000/addProduct', {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -23,7 +22,7 @@ const Inventory = () => {
                 <p><span>Product Image:</span><input type="file" /></p>
                 <button onClick={handleAddProduct}>Add Product</button>
             </form>
-           
+            
         </div>
     );
 };

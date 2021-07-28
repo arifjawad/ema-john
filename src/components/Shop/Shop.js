@@ -28,7 +28,7 @@ const Shop = () => {
  
    //fetch from mongoDB API 
    useEffect(()=>{
-       fetch('http://localhost:7000/products')
+       fetch('http://localhost:4000/products')
        .then(res => res.json())
        .then(data=> setProducts(data))
    },[])
@@ -37,7 +37,7 @@ const Shop = () => {
    useEffect(()=>{
     const savedCart= getDatabaseCart();
     const productKeys = Object.keys(savedCart);
-    fetch('http://localhost:7000/productKeys',{
+    fetch('http://localhost:4000/productKeys',{
         method: 'POST',
         headers:{
             'Content-Type': 'application/json'
